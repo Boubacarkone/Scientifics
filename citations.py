@@ -127,7 +127,7 @@ class Graphe_Citations(aut.Authors, nx.DiGraph):
                 print(f"Voici la communauté auteur de {auth}: \n\n")
             else:
                 print(f"Voici la communauté auteur de {auth} \
-avec une prondeur au plus {N}: \n\n")
+avec une prondeure au plus {N}: \n\n")
             return inf_part.intersection(e_inf)
         return f"L'auteurs {auth} n'est pas parmi les auteurs étudiés."
 

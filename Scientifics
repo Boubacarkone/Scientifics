@@ -90,7 +90,7 @@ def main():
                 print(resulta)
             else:
                 print(f"Voici la liste des auteurs influencés par {argv[2]} \
-avec une profondeur au plus {argv[3]}: \n\n")
+avec une profondeure au plus {argv[3]}: \n\n")
                 pp(sorted(resulta.items(), key=lambda t: t[1], reverse=True))
 
         elif argv[1] == 'qui_influences':
@@ -99,7 +99,7 @@ avec une profondeur au plus {argv[3]}: \n\n")
                 print(resulta)
             else:
                 print(f"Voici la liste des auteurs qui influent {argv[2]} \
-avec une prondeur au plus {argv[3]}: \n\n")
+avec une profondeure au plus {argv[3]}: \n\n")
                 pp(sorted(resulta.items(), key=lambda t: t[1], reverse=True))
 
         elif argv[1] == 'communaute':
