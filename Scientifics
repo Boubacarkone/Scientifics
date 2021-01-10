@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from sys import argv, exit
+from os import path, remove
+from pprint import pprint as pp
+import init
+
+
+def main():
+    '''
+    Les instructions à exécuter.
+    '''
+
+    if len(argv) != 3 and len(argv) != 4:
+        print("Le nombres d'arguments n'est pas correcte, un nom d'auteur,\
+ en deux mots, doit être entre guillemets 'nom prénom'")
+
+    if len(argv) == 3:
+        if argv[1] == 'clean' and argv[2] == 'data':
+            try:
+                dossier = path.dirname(__file__)
+                chemin1 = path.join(dossier, 'data', 'articles.txt')
+                chemin2 = path.join(dossier, 'data', 'citations.txt')
+                remove(chemin1)
+                remove(chemin2)
+                print("Les données on été supprimer de l'application")
+            except FileNotFoundError:
+                print("Il n'y a plus de données à supprimer !")
+            exit(0)
+
+        try:
+            from citations import Graphe_Citations
+        except FileNotFoundError:
+            print("Utiliser d'abord la fonction init pour charger des données !")
+            exit(0)
+
+        G = Graphe_Citations()
+
+        if argv[1] == 'cite':
+            pp(G.cite(argv[2]))
+            exit(0)
+
+        if argv[1] == 'influences_part':
+            resulta = G.influences_part(argv[2])
+            if type(resulta) == str:
+                print(resulta)
+            else:
+                print(f"Voici la liste des auteurs influencés par {argv[2]} : \n\n")
+                pp(sorted(resulta.items(), key=lambda t: t[1], reverse=True))
+
+        elif argv[1] == 'qui_influences':
+            resulta = G.qui_influences(argv[2])
+            if type(resulta) == str:
+                print(resulta)
+            else:
+                print(f"Voici la liste des auteurs qui influent {argv[2]} : \n\n")
+                pp(sorted(resulta.items(), key=lambda t: t[1], reverse=True))
+
+        elif argv[1] == 'communaute':
+            pp(G.communaute(argv[2]))
+        else:
+            print(f"la fonction {argv[1]} n'est pas définie.")
+
+    if len(argv) == 4:
+        if argv[1] == 'init':
+            if path.isdir(argv[2]) == True and path.isfile(argv[3]) == True:
+                init.initialiser(argv[2], argv[3])
+                exit(0)
+            else:
+                print("Le premier argument ou le deuxième n'est pas\
+ respectivement un dossier ou un fichier")
+        else:
+            try: 
+                int(argv[3])
+            except:
+                print(f"L'argument {argv[3]} n'est pas un nombre, si le nom d'auteur est\
+ constitué de deux mots il faut les mettre entre guillemets")
+                exit(0)
+        try:
+            from citations import Graphe_Citations
+        except FileNotFoundError:
+            print("Utiliser d'abord la fonction init pour charger des données !")
+            exit(0)
+        G = Graphe_Citations()
+
+        if argv[1] == 'influences_part':
+            resulta = G.influences_part(argv[2], int(argv[3]))
+            if type(resulta) == str:
+                print(resulta)
+            else:
+                print(f"Voici la liste des auteurs influencés par {argv[2]} \
+avec une profondeur au plus {argv[3]}: \n\n")
+                pp(sorted(resulta.items(), key=lambda t: t[1], reverse=True))
+
+        elif argv[1] == 'qui_influences':
+            resulta = G.qui_influences(argv[2], int(argv[3]))
+            if type(resulta) == str:
+                print(resulta)
+            else:
+                print(f"Voici la liste des auteurs qui influent {argv[2]} \
+avec une prondeur au plus {argv[3]}: \n\n")
+                pp(sorted(resulta.items(), key=lambda t: t[1], reverse=True))
+
+        elif argv[1] == 'communaute':
+            pp(G.communaute(argv[2], int(argv[3])))
+        else:
+            print(f"la fonction {argv[1]} n'est pas définie.")
+
+if __name__ == "__main__":
+    main()

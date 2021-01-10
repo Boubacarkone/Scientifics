@@ -1,0 +1,11 @@
+Les Modules importés ou à installer pour ce projets : 
+
+json
+path from os
+networkx
+argv, exit from sys
+re
+pathlib
+pprint
+rom time import sleep
+from progress.bar import Bar
